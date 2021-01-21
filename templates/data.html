@@ -34,8 +34,10 @@
 <body class="text-center">
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
+            <div class="nav nav-masthead justify-content-left">
+                <a class="navbar-brand" href="templates/index.html">Santander Analytics | 
+                  <img class="nav-ufo" src="static/images/santander-logo-2.png" width="100">
             <div class="inner">
-                <h3 class="masthead-brand pred-font">Accident Fatality Predictor</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link" href="/">Home</a>
                     <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -57,7 +59,7 @@
                                     <ul class="list-group" id="filters">
 
                                         <li class="filter list-group-item bg-secondary">
-                                            <label for="hour"> Hour </label>
+                                            <label for="hour"> Client ID_code </label>
                                             <select name="hour" id="hour">
                           <option value="0" class="filtered"> 0 </option>
                           <option value="1" class="filtered"> 1 </option>
@@ -85,7 +87,7 @@
                           <option value="23" class="filtered"> 23 </option>                          
                         </select>
                                         </li>
-
+<!-- 
                                         <li class="filter list-group-item bg-secondary">
                                             <label for="roadclass"> Road Class </label>
                                             <select name="roadclass" id="roadclass">
@@ -178,7 +180,7 @@
                                 <th class="table-head">Latitude</th>
                                 <th class="table-head">Longitude</th>
                                 <th class="table-head">Neighbourhood</th>
-                                <th class="table-head">Fatality</th>
+                                <th class="table-head">Fatality</th> -->
                             </tr>
                         </thead>
                         <tbody></tbody>
