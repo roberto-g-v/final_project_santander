@@ -1,5 +1,4 @@
 # Dependencies Setup
-
 import pandas as pd
 from flask import Flask, request, redirect, url_for, flash, jsonify, render_template
 import requests
