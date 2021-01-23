@@ -67,9 +67,8 @@ tbody>tr>td:first-of-type {
 }
 
 .filtered {
-    color: black;
+    color: #ffffff;
 }
-
 .positions {
     text-align: right;
 }
