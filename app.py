@@ -3,8 +3,15 @@ import pandas as pd
 from flask import Flask, request, redirect, url_for, flash, jsonify, render_template
 import requests
 import numpy as np
-import pickle as p
 import json
+import sqlite3 as sql
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.models import load_model
+
+
+#Set up data base
+conn = sql.connect('database/test_final.db', check_same_thread=False)
 
 # Create an instance of the Flask class
 app = Flask(__name__)
@@ -25,6 +32,34 @@ def dashboard():
 def getmodels():
     return render_template("Models.html")
 
+@app.route("/class/<test_id>")
+def test(test_id):
+    x = pd.read_sql(f'SELECT * FROM final WHERE ID_code == "{test_id}"', conn)
+    x = x.drop("index", axis=1)
+    x= x.drop("ID_code", axis=1)
+    model = load_model("models/neuronal_network_07.h5")
+    pred_class = model.predict_classes(x)
+    probability = model.predict(x)
+    no_transaction = probability[0][0]
+    transaction = probability[0][1]
+    result = []
+    pred_class = pred_class[0]
+    if pred_class == 0:
+        result_dict = {}
+        result_dict['prediction'] = 'NO Transaction'
+        result_dict['No transaction'] = str(no_transaction)
+        result_dict['transaction'] = str(transaction)
+        result.append(result_dict)
+
+    else:
+        result_dict = {}
+        result_dict['prediction'] = 'Transaction'
+        result_dict['No transaction'] = str(no_transaction)
+        result_dict['transaction'] = str(transaction)
+        result.append(result_dict)
+
+    return jsonify(result)
+
 @app.route('/predict', methods=["GET", "POST"])
 def predict():
 
@@ -32,84 +67,16 @@ def predict():
 
         # getting user input from HTML form
         hour = request.form["hour"]
-        road_class = request.form["road_class"]
-        traffic_ctl = request.form["traffic_control"]
-        visibility = request.form["visibility"]
-        light = request.form["light"]
-        condition = request.form["condition"]
+        hour = f"test_{hour}"
 
-        # encoding string input to binary value arrays for the model prediction
-        hour_array = onehot_encode("hour", hour)
-        road_class_array = onehot_encode("road_class", road_class)
-        traffic_ctl_array = onehot_encode("traffic_control", traffic_ctl)
-        visibility_array = onehot_encode("visibility", visibility)
-        light_array = onehot_encode("light", light)
-        condition_array = onehot_encode("condition", condition)
+        response = requests.get(f"http://127.0.0.1:5000/class/{hour}")
+        x = response.json()
+        prediction = x[0]["prediction"]
+        prob1 = x[0]["No transaction"]
+        prob2 = x[0]["transaction"]
 
-        # joining the arrays into one with 66 features
-        data_array = [hour_array + road_class_array + traffic_ctl_array + visibility_array + light_array + condition_array]
+    return render_template("prediction.html", pred = prediction, pred1 = prob1, pred2 = prob2)
 
-        # print(hour_array)
-        # print(road_class_array)
-        # print(traffic_ctl_array)
-        # print(visibility_array)
-        # print(light_array)        
-        # print(condition_array)   
-        # print(data_array)
-        # print(len(data_array))
-
-    # predicting fatal or non-fatal with our model
-    modelfile = 'Models/DecisionTree_final_model.pickle'
-    model = p.load(open(modelfile, 'rb'))
-    predict = model.predict(data_array)
-
-    return render_template("prediction.html", pred = predict[0])
-
-# function to one hot encode user input for model prediction
-def onehot_encode(feature, value):
-
-    if feature == "hour":
-        array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        options = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
-        for i in range(len(options)):
-            if options[i] == value:
-                array[i] = 1
-    elif feature == "road_class":
-        array = [0,0,0,0,0,0,0,0]
-        options = ["Collector", "Expressway", "Laneway", "Local", "Major Arterial", "Major Arterial Ramp", "Minor Arterial", "Pending"]
-        for i in range(len(options)):
-            if options[i] == value:
-                array[i] = 1
-    elif feature == "traffic_control":
-        array = [0,0,0,0,0,0,0,0,0,0,0]
-        options = ["No Control", "Pedestrian Crossover", "Police Control", "PXO - No Ped", "School Guard", "Stop Sign", "Streetcar (Stop for)", "Traffic Controller", "Traffic Gate", "Traffic Signal", "Yield Sign"]
-        for i in range(len(options)):
-            if options[i] == value:
-                index = i
-                array[index] = 1  
-    elif feature == "visibility":
-        array = [0,0,0,0,0,0,0]
-        options = ["Clear", "Drifting Snow", "Fog, Mist, Smoke, Dust", "Freezing Rain", "Rain", "Snow", "Strong wind"]
-        for i in range(len(options)):
-            if options[i] == value:
-                index = i
-                array[i] = 1   
-    elif feature == "light":
-        array = [0,0,0,0,0,0,0,0]
-        options = ["Dark", "Dark, artificial", "Dawn", "Dawn, artificial", "Daylight", "Daylight, artificial", "Dusk", "Dusk, artificial"]
-        for i in range(len(options)):
-            if options[i] == value:
-                index = i
-                array[i] = 1
-    elif feature == "condition":
-        array = [0,0,0,0,0,0,0,0]
-        options = ["Dry", "Ice", "Loose Sand or Gravel", "Loose Snow", "Packed Snow", "Slush", "Spilled liquid", "Wet"]
-        for i in range(len(options)):
-            if options[i] == value:
-                index = i
-                array[i] = 1
-
-    return array
 
 if __name__ == '__main__':
     app.run(debug=True)
