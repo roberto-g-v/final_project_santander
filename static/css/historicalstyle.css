@@ -98,7 +98,7 @@ select {
     height: 550px;
     padding: 20px;
     margin: 0;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.205);
     background-image: url("/images/Santader.png");
     background-attachment: fixed;
     background-position: bottom center;
@@ -123,22 +123,22 @@ select {
 
 .form-control::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
-    color: #8e979f;
+    color: #8e979f36;
 }
 
 .form-control::-moz-placeholder {
     /* Firefox 19+ */
-    color: #8e979f;
+    color:  #8e979f36;
 }
 
 .form-control:-ms-input-placeholder {
     /* IE 10+ */
-    color: #8e979f;
+    color: #8e979f36;
 }
 
 .form-control:-moz-placeholder {
     /* Firefox 18- */
-    color: #8e979f;
+    color: #8e979f1f;
 }
 
 
@@ -157,6 +157,7 @@ select {
     #table-area tr td:first-child {
         font-size: 1.8em;
         font-weight: bold;
+        text-decoration-color: #0e0f0f;
         background: #0e0f0f;
     }
     #table-area tr td:last-child {
@@ -168,7 +169,7 @@ select {
         height: 1px;
         margin-top: 20px;
         content: " ";
-        background: aliceblue;
+        background: rgba(240, 248, 255, 0.205);
     }
     #table-area td {
         font-size: 1.25em;

@@ -33,8 +33,10 @@
 <body class="text-center">
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
+            <div class="nav nav-masthead justify-content-left">
+                <a class="navbar-brand" href="/">Santander Analytics | 
+                  <img class="nav-ufo" src="static/images/santander-logo-2.png" width="100">
             <div class="inner">
-                <h3 class="masthead-brand pred-font">Santander Customer Transaction</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link" href="/">Home</a>
                     <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -45,8 +47,8 @@
         </header>
 
         <main role="main" class="inner cover">
-            <h3 class="text-dark">Given the input, there is a high probability of
-                <h2 class="text-dark">{{pred | upper}}</h2>
+            <h3 class="text-dark">Given the input, there is a high probability of:
+                <h1><button type="submit" class="btn bg-mars-red my-2" href="#" role="button"><strong><u>{{pred | upper}}</u></strong></button></h1> 
                 <h3 class="text-dark">Probability of no transaction</h3>
                 <h2 class="text-dark">{{pred1 | upper}}</h2>
                 <h3 class="text-dark">Probability of transaction</h3>
