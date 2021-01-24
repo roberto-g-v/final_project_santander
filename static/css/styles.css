@@ -1,44 +1,38 @@
 * {
-    color: #0e0f0f;
+    color: #e9ecef;
 }
 
 .header-font {
     font-family: 'Playfair Display', serif;
     font-weight: bolder;
     font-size: 50px;
-    color: black;
 }
 
 .pred-font {
     font-family: 'Playfair Display', serif;
     font-weight: bolder;
     font-size: 30px;
-    color: black;
 }
 
 .bigger {
     font-family: 'Playfair Display', serif;
     font-weight: bolder;
     font-size: 25px;
-    color: black;
 }
 
 .big {
     font-family: 'Playfair Display', serif;
     font-weight: bolder;
     font-size: 18px;
-    color: black;
 }
 
 .mini-header-font {
     font-family: 'Playfair Display', serif;
     font-weight: bold;
-    color: black;
 }
 
 .headline {
     font-weight: bolder;
-    color: black;
 }
 
 #table-area {
@@ -52,30 +46,30 @@ tbody>tr>td {
 
 tbody>tr>td:first-of-type {
     font-weight: bold;
-    color:#0e0f0f
 }
 
 .bg-mars-red {
     /* background-color: #bd2433c5; */
-    background-color:#f80f0f;
+    background-color: #f80f0fe3;
 }
 
 .text-mars-red,
 .link {
-    color: #f80f0f;
+    color: #f80f0fe3;
 }
 
 .foot-a {
-    color: #ffffff13;
+    color: #e9ecefa4;
 }
 
 .bg-grey-card {
-    background-color: #ffffff13;
+    background-color: #ffffff7e;
 }
 
 .filtered {
-    color: #ffffff13;
+    color: black;
 }
+
 .positions {
     text-align: right;
 }
