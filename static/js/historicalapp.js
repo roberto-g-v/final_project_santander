@@ -8,9 +8,7 @@ filterButton.on("click",function(){
     var hourInput=document.getElementById("hour").value;
     console.log(hourInput);
     
-    var dataFiltered=tableData.filter(record => (record.VISIBILITY == visibilityInput || visibilityInput == "") && (record.LIGHT == lightInput || lightInput == "")
-    && (record.RDSFCOND == conditionInput || conditionInput == "") && (record.HOUR == hourInput || hourInput == "") && (record.ROAD_CLASS == roadInput || roadInput=="") 
-    && (record.TRAFFCTL == trafficInput || trafficInput == ""));
+    var dataFiltered=tableData.filter(record =>(record.HOUR == hourInput || hourInput == ""));
     console.log(dataFiltered);
 
     var tbody=d3.select("tbody");
